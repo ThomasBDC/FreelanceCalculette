@@ -29,8 +29,10 @@ do
             else
             {
                 if (!currentNumberOneFinded)
+                {
                     currentNumberOneFinded = true;
-                if (currentNumberOneFinded && currentNumberTwo != "" && currentOperator != "")
+                }
+                else if (currentNumberOneFinded && currentNumberTwo != "" && currentOperator != "")
                 {
                     currentResult = doCalculs(currentNumberOne, currentNumberTwo, currentOperator);
 
