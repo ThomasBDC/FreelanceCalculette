@@ -52,6 +52,8 @@ Console.WriteLine($"CA Net Mensuel: {getMensual(CANet)}");
 
 Console.WriteLine($"Vous êtes à {Plafond - CABrut} € du plafind");
 
+//nouveau commentaire
+
 Console.WriteLine("Tapez sur n'importe quelle touche pour quitter l'application.");
 Console.ReadLine();
 
