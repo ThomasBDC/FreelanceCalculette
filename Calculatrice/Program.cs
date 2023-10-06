@@ -6,42 +6,56 @@ do
     Console.WriteLine("Donnez moi votre calcul");
 
     string reponse = Console.ReadLine();
-
-    string currentNumberOne = "";
-    string currentNumberTwo = "";
-    string currentOperator = "";
-    bool currentNumberOneFinded = false;
-    decimal currentResult = 0;
-    foreach (char carac in reponse)
+    try
     {
-        if (Char.IsDigit(carac))
+        string currentNumberOne = "";
+        string currentNumberTwo = "";
+        string currentOperator = "";
+        bool currentNumberOneFinded = false;
+        decimal currentResult = 0;
+        foreach (char carac in reponse)
         {
-            if (currentNumberOneFinded)
+            if (Char.IsDigit(carac))
             {
-                currentNumberTwo += carac;
+                if (currentNumberOneFinded)
+                {
+                    currentNumberTwo += carac;
+                }
+                else
+                {
+                    currentNumberOne += carac;
+                }
             }
             else
             {
-                currentNumberOne += carac;
+                if (!currentNumberOneFinded)
+                    currentNumberOneFinded = true;
+                if (currentNumberOneFinded && currentNumberTwo != "" && currentOperator != "")
+                {
+                    currentResult = doCalculs(currentNumberOne, currentNumberTwo, currentOperator);
+
+                    currentNumberOne = currentResult.ToString();
+                    currentNumberTwo = "";
+                }
+                currentOperator = carac.ToString();
             }
+        }
+        currentResult = doCalculs(currentNumberOne, currentNumberTwo, currentOperator);
+
+        Console.WriteLine(currentResult);
+    }
+    catch(Exception ex)
+    {
+        if (ex.GetType() == typeof(DivideByZeroException))
+        {
+            Console.WriteLine("Impossible de diviser par zero");
         }
         else
         {
-            if (!currentNumberOneFinded)
-                currentNumberOneFinded = true;
-            if (currentNumberOneFinded && currentNumberTwo != "" && currentOperator != "")
-            {
-                currentResult = doCalculs(currentNumberOne, currentNumberTwo, currentOperator);
-
-                currentNumberOne = currentResult.ToString();
-                currentNumberTwo = "";
-            }
-            currentOperator = carac.ToString();
+            Console.WriteLine("Impossible d'interpréter votre demande.");
         }
     }
-    currentResult = doCalculs(currentNumberOne, currentNumberTwo, currentOperator);
-
-    Console.WriteLine(currentResult);
+    
 
     Console.WriteLine("Voulez-vous refaire un calcul ? O/N");
     continueOperation = Console.ReadLine() == "O";
@@ -67,8 +81,6 @@ decimal doCalculs(string numberOneStr, string numberTwoStr, string operateur)
         case "/":
             resultat = numberOne / numberTwo;
             break;
-        default:
-            throw new ArgumentException("Opérateur non pris en charge : " + operateur);
     }
 
     return resultat;
