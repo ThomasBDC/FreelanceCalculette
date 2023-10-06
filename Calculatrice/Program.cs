@@ -15,7 +15,8 @@ do
         decimal currentResult = 0;
         foreach (char carac in reponse)
         {
-            if (Char.IsDigit(carac))
+            //Le caractère est il un nombre ? 
+            if (char.IsDigit(carac))
             {
                 if (currentNumberOneFinded)
                 {
@@ -34,8 +35,10 @@ do
                 }
                 else if (currentNumberOneFinded && currentNumberTwo != "" && currentOperator != "")
                 {
+                    //J'ai mon nombre 1, mon nombre 2, et mon opérateur, je fait donc le calcul
                     currentResult = doCalculs(currentNumberOne, currentNumberTwo, currentOperator);
-
+                    
+                    //Le calcul est fait, donc mon nombre 1 devient le résultat final, et je supprime le 2
                     currentNumberOne = currentResult.ToString();
                     currentNumberTwo = "";
                 }
