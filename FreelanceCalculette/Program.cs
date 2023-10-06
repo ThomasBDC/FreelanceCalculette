@@ -1,68 +1,66 @@
-﻿Console.WriteLine("Bienvenue dans mon application de comptabilité pour Freelance !");
-Console.WriteLine("");
-Console.WriteLine("");
+﻿const float _plafondTTC = 36800;
 
-//Voici comment récupérer les valeurs de toutes les factures
-Console.WriteLine("Entrez les valeurs de vos factures, puis tapez STOP quand vous avez fini.");
-List<int> allFactures= new List<int>(); 
-bool continueAsking = true;
-do
+
+//Début du programme
+float nbFacture = getNumberFromUser();
+
+float sommeFacture = 0;
+
+for (int i = 0; i < nbFacture; i++)
 {
-    bool isOk = false;
-    do
+    sommeFacture += getNumberFromUser();
+}
+
+//Affichage des statistiques
+float net = getNet(sommeFacture);
+
+Console.WriteLine("Somme des factures en brut annuel " + getNumberWithEuro(sommeFacture));
+Console.WriteLine("Somme des factures en net annuel " + getNumberWithEuro(net));
+
+//version 1 
+float mensuelNet = getMensuel(net);
+Console.WriteLine("Facture par mois net " + getNumberWithEuro(mensuelNet));
+
+if (sommeFacture > _plafondTTC)
+{
+    Console.WriteLine("Le plafond brut est dépassé de " + getNumberWithEuro((sommeFacture - _plafondTTC)));
+}
+
+#region Fonctions
+float getNet(float brut)
+{
+    return brut * 0.75f;
+}
+
+float getMensuel(float annuel)
+{
+    return annuel / 12f;
+}
+
+string getNumberWithEuro(float price)
+{
+    return price + " €";
+}
+
+float getNumberFromUser()
+{
+    int numberToReturn = 0;
+    bool done = false;
+    while (!done)
     {
-        string reponseString = "";
         try
         {
-            //on récupére une facture
-            Console.WriteLine("Quel est la valeur TTC de votre facture ?");
-            reponseString = Console.ReadLine();
-            int reponse = Convert.ToInt32(reponseString);
-            allFactures.Add(reponse);
-            isOk = true;
+            Console.WriteLine("Entrez votre proposition");
+            numberToReturn = Convert.ToInt32(Console.ReadLine());
+            done = true;
         }
-        catch (Exception ex)
+        catch
         {
-            continueAsking = !string.Equals(reponseString, "STOP", StringComparison.CurrentCultureIgnoreCase);
-            if (continueAsking)
-            {
-                Console.WriteLine("Entrée incorrecte, veuillez rééssayer");
-                isOk = false;
-            }
-            else
-            {
-                isOk = true;
-            }
+            Console.WriteLine("Saisie incorect");
+
         }
     }
-    while (!isOk) ;
-}
-while (continueAsking);
-
-//Faire les calculs
-int CABrut = allFactures.Sum();
-decimal CANet = Convert.ToDecimal(CABrut * 0.75);
-decimal Plafond = 36800;
-
-Console.WriteLine($"CA Brut Annuel : {CABrut}");
-Console.WriteLine($"CA Net Annuel: {CANet}");
-Console.WriteLine($"CA Brut Mensuel: {getMensual(CABrut)}");
-Console.WriteLine($"CA Net Mensuel: {getMensual(CANet)}");
-
-
-Console.WriteLine($"Vous êtes à {Plafond - CABrut} € du plafind");
-
-//nouveau commentaire
-
-Console.WriteLine("Tapez sur n'importe quelle touche pour quitter l'application.");
-Console.ReadLine();
-
-static decimal getMensual(decimal annualSum)
-{
-    return annualSum / 12;
+    return numberToReturn;
 }
 
-void DisBonjour()
-{
-    Console.WriteLine("Bonjour");
-}
+#endregion
