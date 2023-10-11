@@ -11,7 +11,17 @@ Console.WriteLine("Merci d'entrer l'opérateur");
 string operateur = Console.ReadLine();
 
 Console.WriteLine("Voici le résultat : ");
-Console.WriteLine(doCalculs(numberOne, numberTwo, operateur));
+
+try
+{
+    Console.WriteLine(doCalculs(numberOne, numberTwo, operateur));
+
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
+}
+
 
 decimal doCalculs(decimal numberOne, decimal numberTwo, string operateur)
 {
