@@ -1,4 +1,16 @@
-﻿Console.WriteLine("Bienvenue dans votre application de calculatrice !");
+﻿//Instancier un calcul en dur dans le code
+using Calculatrice;
+
+
+string nombre1 = Console.ReadLine();
+string nombre2 = Console.ReadLine();
+string operateur = Console.ReadLine();
+Calcul monCalculFromString = new Calcul(nombre1, nombre2, operateur);
+
+Console.WriteLine(monCalculFromString.DoCalculs());
+
+
+Console.WriteLine("Bienvenue dans votre application de calculatrice !");
 bool continueOperation = false;
 
 do

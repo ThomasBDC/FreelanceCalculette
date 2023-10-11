@@ -1,6 +1,5 @@
 ﻿const float _plafondTTC = 36800;
 
-
 //Début du programme
 float nbFacture = getNumberFromUser();
 
